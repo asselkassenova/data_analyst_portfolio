@@ -1,1 +1,430 @@
+---
+title: "Bank Personal Loan Modelling"
+author: "Assel_Kassenova"
+date: "5/4/2023"
+output:html_document:
+    df_print: paged
+---
+
+# Part 1.Data preparation& Exploration
+ 
+```{r}
+# importing libraries 
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+library(rpart)
+library(arules)
+library(cluster)
+library(factoextra)
+library(GGally)
+library(forecast)
+```
+ 
+```{r}
+# imorting dataset 
+df <- read_csv("Bank_Personal_loan_Modelling.csv")
+```
+
+Information about dataset: 
+ID_Customer: Customer ID
+Age: Customer’s age in completed years
+Experience: #years of professional experience
+Income: Annual income of the customer (in thousand dollars)
+ZIP Code: Home Address ZIP code.
+Family: the Family size of the customer
+CCAvg: Average spending on credit cards per month (in thousand dollars)
+Education:Education Level. 1: Undergrad; 2: Graduate;3: Advanced/Professional
+Mortgage: Value of house mortgage if any. (in thousand dollars)
+Personal Loan: Did this customer accept the personal loan offered in the last campaign?
+
+**Explorind Data**
+```{r}
+# NA values
+sum(is.na(df))
+
+#dublicates 
+sum(duplicated(df))
+
+# summary statistics 
+summary(df)  
+```
+
+1. This dataset contain no NA values. 
+2. Summary of this datasets shows that variable Experience has value "-3". Incorrect value.
+3. Zip Code is numeric value. we might have to delete it after descriptive analytics 
+ 
+**Preparing Data**
+```{r}
+# replacing space in column names  by "_"
+colnames(df) <- gsub(" ", "_", colnames(df))
+
+# data cleaning 
+df <- df[df$Experience >= 0,] # removing all values less than 0 in Experience 
+```
+
+# Part 2.Descriptive Analytics
+
+```{r}
+library(flexdashboard)
+library(tidyverse)
+library(highcharter)
+library(gt)
+library(htmltools)
+```
+
+# Counts of Personal Loan, Mortgage, Securities Account, Online, and Credit Card
+
+```{r}
+df %>%
+  group_by(Personal_Loan, Mortgage, Securities_Account, Online, CreditCard) %>%
+  summarise(count = n()) %>%
+  ungroup() %>%
+  gather(key = "variable", value = "value", -count) %>%
+  mutate(value = ifelse(value == 1, "Accepted Loan", "Did Not Accept Loan")) %>%
+  hchart(type = "column", hcaes(x = variable, y = count, group = factor(value), color = variable)) %>% 
+  hc_plotOptions(column = list(stacking = FALSE)) %>% 
+  hc_legend(enabled = TRUE) %>% 
+  hc_xAxis(title = list(text = "Variable")) %>% 
+  hc_yAxis(title = list(text = "Count")) %>% 
+  hc_title(text = "Counts of Personal Loan, Mortgage, Securities Account, Online, and Credit Card") %>% 
+  hc_colors(list('#f15c80', '#7cb5ec'))
+```
+
+# Personal Loan Holders VS Securities Account and Credit Card Status
+
+```{r}
+df %>%
+  group_by(Personal_Loan, Securities_Account, CreditCard) %>%
+  summarise(count = n()) %>%
+  ungroup() %>%
+  hchart(type = "column", hcaes(x = factor(ifelse(Securities_Account == 1 & CreditCard == 1, "Have Both", ifelse(Securities_Account == 1, "Have Securities Account", ifelse(CreditCard == 1, "Have Credit Card", "Have None")))), y = count, group = factor(ifelse(Personal_Loan == 1, "Accepted Loan", "Did Not Accept Loan"), levels = c("Accepted Loan", "Did Not Accept Loan")))) %>% 
+  hc_plotOptions(column = list(stacking = FALSE)) %>% 
+  hc_legend(enabled = TRUE) %>% 
+  hc_xAxis(title = list(text = "Securities Account and Credit Card Holders")) %>% 
+  hc_yAxis(title = list(text = "Count")) %>% 
+  hc_title(text = "Counts of Personal Loan Holders based on Securities Account and Credit Card Status") 
+```
+# Mortgage Holders VS Securities Account and Credit Card Status
+
+```{r}
+df %>%
+  group_by(Mortgage, Securities_Account, CreditCard) %>%
+  summarise(count = n()) %>%
+  ungroup() %>%
+  hchart(type = "column", hcaes(x = factor(ifelse(Securities_Account == 1 & CreditCard == 1, "Have Both", ifelse(Securities_Account == 1, "Have Securities Account", ifelse(CreditCard == 1, "Have Credit Card", "Have None")))), y = count, group = factor(ifelse(Mortgage == 0,"Don't have Mortgage", "Have Mortgage"), levels = c("Don't have Mortgage", "Have Mortgage")))) %>% 
+  hc_plotOptions(column = list(stacking = FALSE)) %>% 
+  hc_legend(enabled = TRUE) %>% 
+  hc_xAxis(title = list(text = "Securities Account and Credit Card Holders")) %>% 
+  hc_yAxis(title = list(text = "Count")) %>% 
+  hc_title(text = "Counts of Mortgage Holders based on Securities Account and Credit Card Status") 
+```
+
+# Personal Loan Status based on Income
+
+```{r}
+df %>%
+  group_by(Personal_Loan, Income) %>%
+  summarise(count = n()) %>%
+  hchart(type = "column", hcaes(x = Income, y = count, group = factor(ifelse(Personal_Loan == 0, "Did Not Accepted Loan", "Accepted Loan"), levels = c("Did Not Accepted Loan", "Accepted Loan" )))) %>% 
+  hc_plotOptions(column = list(stacking = FALSE)) %>% 
+  hc_legend(enabled = TRUE) %>% 
+  hc_xAxis(title = list(text = "Income Category")) %>% 
+  hc_yAxis(title = list(text = "Count")) %>% 
+  hc_title(text = "Personal Loan Status based on Income")
+
+```
+
+
+# Education and Personal Loan
+```{r}
+df %>%
+  group_by(Education, Personal_Loan = factor(ifelse(Personal_Loan == 0, "Did Not Accepted Loan", "Accepted Loan"), levels = c( "Did Not Accepted Loan", "Accepted Loan"))) %>%
+  summarise(n = n()) %>%
+  group_by(Education) %>%
+  mutate(pct = n/sum(n)*100) %>%
+  ungroup() %>%
+  hchart(type = "column", hcaes(x = Education, y = pct, group = Personal_Loan), colorByPoint = TRUE) %>%
+  hc_title(text = "Mortgage by Education") %>%
+  hc_yAxis(title = "Percentage", labels = list(format = "{value}%")) %>%
+  hc_tooltip(pointFormat = "<b>{point.y:.1f}%</b><br>") %>%
+  hc_plotOptions(column = list(stacking = "normal")) %>%
+  hc_legend(layout = "horizontal", align = "center", verticalAlign = "bottom")
+```
+
+# Personal Loan by Family
+
+```{r}
+df %>%
+  group_by(Family, Personal_Loan = factor(ifelse(Personal_Loan == 0, "Did Not Accept Loan", "Accepted Loan"), levels = c("Did Not Accept Loan", "Accepted Loan"))) %>%
+  summarise(n = n()) %>%
+  group_by(Family) %>%
+  mutate(pct = n/sum(n)*100) %>%
+  ungroup() %>%
+  hchart(type = "column", hcaes(x = Family, y = pct, group = Personal_Loan), colorByPoint = TRUE) %>%
+  hc_title(text = "Personal Loan by Education") %>%
+  hc_yAxis(title = "Percentage", labels = list(format = "{value}%")) %>%
+  hc_tooltip(pointFormat = "<b>{point.y:.1f}%</b><br>") %>%
+  hc_plotOptions(column = list(stacking = "normal")) %>%
+  hc_legend(layout = "horizontal", align = "center", verticalAlign = "bottom")
+```
+
+# Personal Loan by Age
+
+```{r}
+df %>%
+  group_by(Personal_Loan, Age) %>%
+  summarise(count = n()) %>%
+  group_by(Age) %>%
+  mutate(total = sum(count), 
+         percentage = paste0(round(100 * count/total, 2), "%")) %>%
+  hchart(type = "column", hcaes(x = Age, y = count, group = factor(ifelse(Personal_Loan == 0, "Did Not Accept Loan", "Accepted Loan"), levels = c( "Did Not Accept Loan", "Accepted Loan")))) %>% 
+  hc_plotOptions(column = list(stacking = FALSE)) %>% 
+  hc_legend(enabled = TRUE) %>% 
+  hc_xAxis(title = list(text = "Income Category")) %>% 
+  hc_yAxis(title = list(text = "Percentage")) %>% 
+  hc_tooltip(pointFormat = "<b>{point.percentage}</b>") %>%
+  hc_title(text = "Personal Loan Status based on Income")
+```
+
+# Distribution of ZIP Code with no Personal Loan
+
+```{r}
+
+df$ZIP_Code <- as.factor(df$ZIP_Code)
+
+# subset data for Mortgage == 0
+df_subset <- subset(df, Personal_Loan == 0)
+
+# order ZIP Code by count of Mortgage == 0
+zip_order <- as.character(names(sort(table(df_subset$ZIP_Code), decreasing = TRUE)))[1:20]
+
+# plot count of ZIP Code
+ggplot(df_subset, aes(y = ZIP_Code, fill = ZIP_Code)) + 
+  geom_bar() + 
+  scale_fill_viridis_d(option = "mako") + 
+  scale_y_discrete(limits = zip_order) + 
+  theme_minimal() + 
+  theme(legend.position = "none",
+        axis.text.x = element_blank(),
+        axis.title.x = element_blank(),
+        axis.line.y = element_blank(),
+        axis.ticks.y = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y = element_blank()) +
+  labs(title = "Distribution of ZIP Code with no Personal Loan", style = list(fontSize='25px', 
+                                                                         fontWeight= 'bold'),
+       y = "ZIP Code")
+```
+The rest of the Descriptive analytics can be on dasboard following link:  "https://ad699.netlify.app/" 
+
+#Part 3.Building regression and classifier
+
+```{r}
+df <- df %>%
+  filter(Experience>=0)
+df2 <- df %>%
+  select(Age,Experience,Income,Family,CCAvg,Education,Mortgage,
+         Securities_Account,CD_Account,Personal_Loan)
+```
+
+Online is removed because its an unspecified variable.
+
+```{r}
+df$ZIP_Code <- as.numeric(df$ZIP_Code)
+cor(df)
+```
+Correlation coefficients whose magnitude are between 0.7 and 1.0 indicate variables which can be considered highly correlated.
+Age and experience are also highly correlated because older people are normally have more working experience.
+So experience can be removed.
+Also Zipcode can be removed because its correlation with the personal loan is very low. 
+```{r}
+df2 <- df2 %>%
+  select(Age,Income,Family,CCAvg,Education,Mortgage,
+         Securities_Account,CD_Account,Personal_Loan)
+```
+
+```{r}
+set.seed(699)
+df2 <- slice_sample(df2, prop =1)
+train <- slice_head(df2, prop = 0.6)
+valid <- slice_tail(df2, prop = 0.4)
+```
+
+# Muitiple Linear Regression Model
+
+```{r}
+mlr <- lm(data=train, formula=Personal_Loan ~.)
+summary(mlr)
+```
+```{r}
+mlr_backward <- step(mlr, direction = "backward")
+summary(mlr_backward)
+```
+```{r}
+pred.train <- predict(mlr_backward, train)
+accuracy(pred.train, train$Personal_Loan)
+```
+```{r}
+pred.valid <- predict(mlr_backward, valid)
+accuracy(pred.valid, valid$Personal_Loan)
+```
+
+Errors (Smaller the better)
+ME: Mean error, error = acual - prediction
+MEA: mean absolute error
+MPE: mean percentage error
+MAPE: mean absolute precentage error
+RMSE: root mean square error sqrt(mean(error^2))
+
+```{r}
+sd(train$Personal_Loan)
+```
+
+# K-Nearest Neighbors
+
+# normalize the data
+```{r}
+train_norm <- scale(train[,1:8])
+train_norm <- data.frame(train_norm)
+train_norm <- cbind(train_norm,train$Personal_Loan)
+colnames(train_norm)[ncol(train_norm)] <- "Personal_Loan"
+```
+
+```{r}
+valid_norm <- scale(valid[,1:8])
+valid_norm <- data.frame(valid_norm)
+valid_norm <- cbind(valid_norm, valid$Personal_Loan)
+colnames(valid_norm)[ncol(valid_norm)] <- "Personal_Loan"
+```
+
+# find the best value of K
+```{r}
+library(FNN)
+acc <- c()
+for(k in seq(1, 20, 1)){
+  m <- knn(train=train_norm[,1:8], test=valid_norm[,1:8], cl=train_norm[,9],
+           k=k)
+  acc <- c(acc, mean(valid_norm[,9]==m))
+}
+
+ggplot() + geom_point(aes(x=seq(1, 20, 1), y=acc)) +
+  geom_line(aes(x=seq(1, 20, 1), y=acc))
+```
+k=1 is the best. Predict by 1 neighbors
+However, we will choose k=5 which also has very high accuracy (>96%) because using 5 neighbors as indicates of the prediction is more reliable than using only one neighbor. 
+
+```{r}
+model_knn <- knn(train=train_norm[,1:8], test=valid_norm[,1:8], cl=train_norm[,9],k=5)
+```
+#Accuracy of KNN model
+```{r}
+sum(model_knn == valid_norm[,9]) / nrow(valid_norm)
+```
+96.8% accuracy
+
+# Naive Bayes
+```{r}
+colnames(train)
+```
+
+
+```{r}
+ggplot(train) +
+  geom_bar(aes(x = Age, fill = as.factor(Personal_Loan)), position = "fill") +
+  labs(title = "Proportional Barplots for Age",
+       x = "Age",
+       y = "Proportion")
+```
+```{r}
+train1 <- train %>% mutate(Income = cut(Income, breaks = 5, labels = c("Very Low", "Low", "Medium", "High", "Very High"), include.lowest = TRUE))
+
+
+ggplot(train1) +
+  geom_bar(aes(x = Income, fill = as.factor(Personal_Loan)), position = "fill") +
+  labs(title = "Proportional Barplots for Income",
+       x = "Income",
+       y = "Proportion")
+```
+
+```{r}
+ggplot(train1) +
+  geom_bar(aes(x = Family, fill = as.factor(Personal_Loan)), position = "fill") +
+  labs(title = "Proportional Barplots for Family",
+       x = "Family",
+       y = "Proportion")
+```
+```{r}
+train1 <- train %>% mutate(CCAvg = cut(CCAvg, breaks = 5, labels = c("Very Low", "Low", "Medium", "High", "Very High"), include.lowest = TRUE))
+
+
+ggplot(train1) +
+  geom_bar(aes(x = CCAvg, fill = as.factor(Personal_Loan)), position = "fill") +
+  labs(title = "Proportional Barplots for CCAvg",
+       x = "CCAvg",
+       y = "Proportion")
+```
+```{r}
+
+ggplot(train1) +
+  geom_bar(aes(x = Education, fill = as.factor(Personal_Loan)), position = "fill") +
+  labs(title = "Proportional Barplots for Education",
+       x = "Education",
+       y = "Proportion")
+```
+```{r}
+train1 <- train %>% mutate(Mortgage = cut(Mortgage, breaks = 5, labels = c("Very Low", "Low", "Medium", "High", "Very High"), include.lowest = TRUE))
+
+
+ggplot(train1) +
+  geom_bar(aes(x = Mortgage, fill = as.factor(Personal_Loan)), position = "fill") +
+  labs(title = "Proportional Barplots for Mortgage",
+       x = "Mortgage",
+       y = "Proportion")
+```
+```{r}
+ggplot(train1) +
+  geom_bar(aes(x = Securities_Account, fill = as.factor(Personal_Loan)), position = "fill") +
+  labs(title = "Proportional Barplots for Securities_Account",
+       x = "Securities_Account",
+       y = "Proportion")
+```
+```{r}
+ggplot(train1) +
+  geom_bar(aes(x = CD_Account, fill = as.factor(Personal_Loan)), position = "fill") +
+  labs(title = "Proportional Barplots for CD_Account",
+       x = "CD_Account",
+       y = "Proportion")
+```
+
+```{r}
+library(e1071)
+library(caret)
+train_nb <- train %>% select(Income,CCAvg,Education,Mortgage,CD_Account,Personal_Loan)
+valid_nb <- valid %>% select(Income,CCAvg,Education,Mortgage,CD_Account,Personal_Loan)
+nb_model <- naiveBayes(data=train_nb, Personal_Loan~.)
+nb_model
+```
+
+```{r}
+pred_train <- predict(nb_model, newdata=train_nb)
+table(pred_train, train_nb$Personal_Loan)
+mean(pred_train==train_nb$Personal_Loan)
+```
+
+```{r}
+pred_valid <- predict(nb_model, newdata=valid_nb)
+table(pred_valid, valid_nb$Personal_Loan)
+mean(pred_valid==valid_nb$Personal_Loan)
+```
+Accuracy 89.45%. 
+
+# Part 4. Business insights
+Cluster analysis has grouped customers into five distinct groups based on their characteristics such as income, age, credit card spending, mortgage balance, securities/CD accounts, and debt to income ratio.  The model accuracy is 96%
+
+The "confusion_matrix" table shows the number of true positives, true negatives,  false positives, and false negatives generated by the model's predictions. The "accuracy" variable calculates the proportion of correctly predicted values out of the total number of predictions  made by the model, indicating that the model is 97.98% accurate in predicting personal loan acceptance.
+
+Businesses can use the insights from cluster analysis and the accuracy of the predictive model to develop targeted marketing strategies and financial products to better serve different customer segments. By tailoring marketing efforts to specific customer groups, businesses can increase the efficiency of their marketing campaigns and improve customer engagement. For example, offering cost-saving measures to customers in the "Low-Income and Low-Spending" cluster or promoting high-end products and services to customers in the "High-Income and High-Spending" cluster can lead to increased customer satisfaction and loyalty. Additionally, developing targeted financial products, such as debt consolidation loans, for customers in the "High-Spending and High-Debt" cluster can help businesses meet their unique financial needs and improve their financial well-being.  Overall, leveraging the insights from cluster analysis and predictive models can help businesses better understand and serve their customers, leading to increased revenue and growth opportunities.
+
+
 
