@@ -1,10 +1,10 @@
-### DATA SCIENCE | DATA ANALYTICS PORTFOLIO
+# DATA SCIENCE | DATA ANALYTICS PORTFOLIO
 
 Welcome to my portfolio! 😊
 
 Feel free to check out my personal website: https://asselkassenova.com/
 
-# ABOUT ME 
+### ABOUT ME 
 
 HI There ! 
 
@@ -14,7 +14,7 @@ Feeling intellectually hungry, I've unleashed my passion for data with a masters
 
 Curiosity drives me - I ask questions and hunt for answers! 
 
-## WHAT I CAN DO 
+### WHAT I CAN DO 
 
 This portfolio contains pet projects and some of my school projects(Boston University MS's in Applied Business Analytics).
 
