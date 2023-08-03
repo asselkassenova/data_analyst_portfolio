@@ -1,8 +1,8 @@
-### TASK 
+# TASK 
 
 Perform Sentiment Analysis of Elon Musk Tweets 
 
-### OVERVIEW 
+# OVERVIEW 
 
 Elon Musk is one of the most prominent figures in the tech industry, with a massive following on Twitter. His tweets often make headlines and can have significant effects on the stock market and public opinion. Therefore, it is essential to conduct exploratory data analysis (EDA) and sentiment analysis on his tweets.
 
@@ -10,10 +10,10 @@ EDA involves examining and analyzing data to uncover patterns, trends, and relat
 
 Sentiment analysis is another crucial analysis for Elon Musk's tweets. Sentiment analysis involves using natural language processing and machine learning to determine the sentiment of text data. In this case, sentiment analysis can determine whether his tweets have positive, negative, or neutral sentiment. This analysis can provide insights into how people are reacting to his tweets and whether his tweets are impacting public opinion. Additionally, sentiment analysis can help identify the potential impact of his tweets on the stock market, particularly in the electric vehicle and space industries.
 
-# PLEASE NOTE 
+#### PLEASE NOTE 
 Make sure to run the cells with a GPU accelerator.
 
-### RESULT 
+# RESULT 
 
 - ACTIVITY DURING THE DAY
   
@@ -27,7 +27,7 @@ Make sure to run the cells with a GPU accelerator.
 
   ![newplot (2)](https://github.com/asselkassenova/data_analyst_portfolio/assets/130527153/705f16c6-12c1-4531-9c9d-ed4ee20cd1a4)
 
-### SENTIMENT ANALYSIS RESULT 
+# SENTIMENT ANALYSIS RESULT 
 
 - COUNT PLOT OF SENTIMENTS OF THE DATA
 
