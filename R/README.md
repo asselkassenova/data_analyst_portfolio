@@ -33,4 +33,4 @@ The high accuracy and substantial agreement show:
 The model is able to capture meaningful patterns in the data and make accurate predictions.
 
 ## Tools
-R , Logistic Regression, 
+### R , tidyverse, dplyr, ggplot2, rpart, arules, cluster, factoextra, GGally, forecast
