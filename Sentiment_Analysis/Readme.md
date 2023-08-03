@@ -23,7 +23,33 @@ Make sure to run the cells with a GPU accelerator.
   
 ![newplot (1)](https://github.com/asselkassenova/data_analyst_portfolio/assets/130527153/2560e45e-9d40-470d-8e05-d26ad2c9c69c)
 
-- 
+- WORD COUNT OF HIS TWEETS
+
+  ![newplot (2)](https://github.com/asselkassenova/data_analyst_portfolio/assets/130527153/705f16c6-12c1-4531-9c9d-ed4ee20cd1a4)
+
+### SENTIMENT ANALYSIS RESULT 
+
+- COUNT PLOT OF SENTIMENTS OF THE DATA
+
+![Screen Shot 2023-08-03 at 16 19 05](https://github.com/asselkassenova/data_analyst_portfolio/assets/130527153/bd37e27c-b3b9-4a92-92b0-8d1faf22c2d3)
+
+- SENTIMENT DISTRIBUTION
+  
+![newplot (3)](https://github.com/asselkassenova/data_analyst_portfolio/assets/130527153/a1fa9eea-ea23-4dfd-add5-743168bcaf0d)
+
+- HOURLY TWEETS SENTIMENT
+
+![newplot (4)](https://github.com/asselkassenova/data_analyst_portfolio/assets/130527153/c1c1f34e-fa54-4ff5-b9d0-43f93e7b65d0)
+
+THANK YOU! 
+
+
+
+
+
+  
+
+
 
   
 
