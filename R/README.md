@@ -4,7 +4,7 @@
 To identify factors that influence customers acceptance of personal loans and develop a predictive model to target potential loan customers.
 
 ## Description
-Bank is a US bank that has a growing customer base. The majority of customers is liability customers with varying sizes of deposits. 
+X Bank is a US bank that has a growing customer base. The majority of customers is liability customers with varying sizes of deposits. 
 Not as many customers who are borrowers (asset customers). Bank wants to grow asset customers. Earn more through the interest on loans. 
 First i cleaned the data fron NA values, dublicates. Next, i performed discriptive analytic to each column in order to understand whether or not the customer accetance depends on those factors given on the column. (Education level, Family Size, Income, Morgage, Credit Card e.t.c) 
 
