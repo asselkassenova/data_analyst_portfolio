@@ -16,6 +16,8 @@ Curiosity drives me - I ask questions and hunt for answers!
 
 ## WHAT I CAN DO 
 
+This portfolio contains pet projects and some of my school projects(Boston University MS's in Applied Business Analytics).
+
 <table width=100% valign=top >
   <tr>
     <td width=25%>Project</td>
