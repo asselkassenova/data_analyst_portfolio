@@ -1,9 +1,9 @@
-### PERSONAL LOAN ACCEPTANCE PREDICTION 
+# Personal loan acceptance prediction model 
 
-Hi there! 
+## Tasks
+check what of the bank client' characteristics - family status, having children, purpose of the credit, salary - can have an impact on a loan repayment
+Description
+the data came from an anonymous bank credit department and contains the main information about clients. Data is quite messy - missing and incorrect values, duplicates, etc. First, we clean the data - filling in gaps, correcting wrong values, categorize clients by income, create dictionaries for couple of attributes. After that we analyse the primary data to extract the characteristics of reliable clients who are able to repay their loans on time and those of unreliable borrowers
 
-In this file you will find prediction of personal loan acceptance by a bank customer performed for marketing department. 
-
-- Rmd file contains the code lines with alongside of detailed explanation of each outcome
-- Pdf file is review friendly version of the R markdown file
-- Pptx is the presentation slides with an insights I got from the dataset analytics. 
+## Tools
+R 
