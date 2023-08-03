@@ -25,7 +25,7 @@ Curiosity drives me - I ask questions and hunt for answers!
   </tr>
   
   <tr>
-    <td><a href="[https://github.com/EkaterinaTerentyeva/data_analyst_portfolio/tree/main/01_Evolution_of_the_happiness_score](https://github.com/asselkassenova/data_analyst_portfolio/tree/main/Stroke_prediction)">Stroke Prediction Model</a></td>
+    <td><a href="[[https://github.com/asselkassenova/data_analyst_portfolio/tree/main/Stroke_prediction]">Stroke Prediction Model</a></td>
     <td>Develope predictive model that can effectively forecast the occurrence of a stroke based on the provided features.</td>
     <td>Jupyter Notebook /pandas/ nymphy/ matplotlib.pyplot / sklearn.neighbors / seaborn/ sklearn.ensemble / xgboost </td>
    <td>english/pet project</td>
