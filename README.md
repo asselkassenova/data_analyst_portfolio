@@ -63,7 +63,7 @@ Curiosity drives me - I ask questions and hunt for answers!
     <td><a href="https://github.com/asselkassenova/data_analyst_portfolio/tree/main/BU_projects/Rules"> Grocery List </a></td>
     <td>To identify grocery items bought together the most. Its uselful for shelf organizing and bundle pricing." </td>
     <td> R / aRules /Matrix / arulesViz / tibble/ dplyr  </td>
-       <td>russian/educational project</td>  
+       <td>english/school project</td>  
   </tr>
 
 
