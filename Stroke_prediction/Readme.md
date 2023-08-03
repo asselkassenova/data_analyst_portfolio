@@ -64,3 +64,20 @@ We used the power of gradient boosting, specifically the xboost, to predict stro
 The stroke predictions produced by the model were evaluated using a confusion matrix, ROC curve, and Precision-Recall curve, providing a comprehensive view of the model's performance . This approach highlights the importance of utilizing multiple evaluation metrics in imbalanced classification tasks .
 
 This project underscores the potential of machine learning  in healthcare prediction tasks, providing insights that could aid in patient risk assessment , healthcare planning , and strategy formulation in clinical settings . Future work could focus on refining the prediction model, exploring different strategies for class balancing , and integrating additional patient data  to enhance the accuracy and comprehensiveness of stroke predictions .
+
+## Result
+
+Machine learning model aimed to predict stroke outcomes based on patient data. Here are the key results:
+
+Model performance: The model's overall accuracy was 0.85, suggesting it correctly predicted stroke outcomes for 85% of patients in the test set. However, considering the class imbalance in the dataset, accuracy might not be the best measure of model performance.
+
+Precision and recall: The precision for predicting stroke was low (0.20), meaning that when the model predicted a stroke, it was correct only 20% of the time. The recall was higher (0.52), meaning the model correctly identified 52% of patients who actually had a stroke. The relatively low precision and recall for the 'Stroke' class indicates that the model is struggling to predict this class accurately.
+
+AUC-ROC: The Area Under the Receiver Operating Characteristic Curve (AUC-ROC) was 0.23, indicating the model's poor ability to distinguish between positive and negative classes.
+
+Confusion matrix: The confusion matrix showed a substantial number of false positives and false negatives, particularly for the 'Stroke' class. This further highlighted the model's difficulties in accurately predicting stroke outcomes.
+
+Learning curve: The learning curve indicated that the model could benefit from more training data. However, it also suggested the presence of overfitting, as evidenced by the gap between training and validation scores.
+
+The model's current performance indicates a need for improvements, particularly in its ability to predict the 'Stroke' class accurately. The low precision for this class suggests that the model is over-predicting strokes, which could lead to unnecessary medical interventions if the model were used in a clinical setting. Conversely, the relatively low recall indicates that the model is missing a substantial number of true stroke cases, which could result in missed opportunities for early intervention and treatment.
+The model's low AUC-ROC score further underscores its difficulties in distinguishing between patients who will and will not have a stroke.
