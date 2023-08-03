@@ -8,7 +8,7 @@ Feel free to check out my personal website: https://asselkassenova.com/
 
 HI There ! 
 
-I am Assel with ober 8 years in Marriott Hotels (3 properties).Managing a luxury hotel department has shaped my leadership skills and taught me excellence.  Grateful for exceptional mentors during my Marriott journey, I broke barriers as the only female manager in my department in a Middle Eastern country, skillfully leading a diverse team of 20 from 8 countries. 
+I am Assel with over 8 years experience in Marriott Hotels (3 properties).Managing a luxury hotel department has shaped my leadership skills and taught me excellence.  Grateful for exceptional mentors during my Marriott journey, I broke barriers as the only female manager in my department in a Middle Eastern country, skillfully leading a diverse team of 20 from 8 countries. 
 
 Feeling intellectually hungry, I've unleashed my passion for data with a masters degree in the data world.
 
