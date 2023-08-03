@@ -8,7 +8,7 @@ How to run my code:
 ### What program does: 
 It scrapes data from CarGurus website, displays used car brand & mark, price, milage and the year. Overall web scrapping of Ecommerce websites is useful to compare prices. For commercial companies web scrapping benefits on price defining the price strategy to enter the new market. For regular Ecommerce customers to catch the best deal. The program also calculates the sales tax, which can be very useful for used car dealers. If its newly opening car dealer company who is limited on budget for special programs, they may use this program to see the amount to be paid for tax.
 
-In terms of requirements, following have been used:
+### In terms of requirements, following have been used:
 •	List: cars is a list of Car instances.
 •	Tuple: wear and tear is a list of tuples, with milage and wear and tear calculation.
 •	Dictionary: dict_object and the dictionaries returned by the get_details() method.
@@ -24,5 +24,3 @@ In terms of requirements, following have been used:
 •	__repr__() method: Returns a formatted string representation of the Car instance
 •	A magic class method: __eq__() method is used to compare two Car instances
 The main program loads the Car class from a separate file (car.py), creates Car instances, and makes use of the class methods and attributes. JSON parsing is handled by the try-else block, and the output is saved to a CSV file.
-![image](https://github.com/asselkassenova/data_analyst_portfolio/assets/130527153/4c90c245-929a-4398-b948-1208b3bd3732)
-
