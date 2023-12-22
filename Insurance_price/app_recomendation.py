@@ -9,7 +9,7 @@ from PIL import Image
 
 st.header("DIGITAL NOMAD INSURANCE QUOTATION")
 
-image_url = 'https://github.com/asselkassenova/data_analyst_portfolio/blob/main/Insurance_price/yurt.jpg'
+image_url = 'Insurance_price/yurt.jpg'
 
 # Display the image from the URL
 st.image(image_url, use_column_width=True)
@@ -56,10 +56,8 @@ sex = st.radio('Sex', ['Male', 'Female']) == 'Male'
 smoker = st.radio('Smoker', ['Yes', 'No']) == 'Yes'
 region = st.selectbox('Region', ['Northwest', 'Southeast', 'Southwest'])
 
-# Specify the path to the model file
-model_path = st.text_input('Path to solubility_model.pkl', 'https://github.com/asselkassenova/data_analyst_portfolio/blob/main/Insurance_price/solubility_model.pkl')
-
 if st.button('Predict'):
+    model_path = 'Insurance_price/solubility_model.pkl'  # Path to the model file
     prediction = load_and_predict(model_path, age, bmi, children, sex, smoker, region)
     if isinstance(prediction, str):
         st.error(f'Error: {prediction}')
