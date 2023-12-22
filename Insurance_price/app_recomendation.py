@@ -49,12 +49,12 @@ st.title('Insurance Quotation Recommender')
 st.subheader('Enter Client Details')
 
 # Input fields for client details
-age = st.number_input('Age', min_value=0)
-bmi = st.number_input('BMI', min_value=0)
-children = st.number_input('Number of Children', min_value=0)
-sex = st.radio('Sex', ['Male', 'Female']) == 'Male'
-smoker = st.radio('Smoker', ['Yes', 'No']) == 'Yes'
-region = st.selectbox('Region', ['Northwest', 'Southeast', 'Southwest'])
+age = st.slider('Age:', 18, 100)
+sex = st.radio('Sex:', ['Male', 'Female'])
+bmi = st.slider('BMI:', 10, 55)
+children = st.slider('Number of Children:', 0, 5)
+smoker = st.radio('Smoker:', ['Yes', 'No'])
+region = st.radio('Region:', ['Northwest', 'Southeast', 'Southwest'])
 
 if st.button('Predict'):
     model_path = 'Insurance_price/solubility_model.pkl'  # Path to the model file
