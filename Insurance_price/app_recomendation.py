@@ -8,8 +8,11 @@ import pickle
 from PIL import Image
 
 st.header("DIGITAL NOMAD INSURANCE QUOTATION")
-image = Image.open('yurt.jpg') 
-st.image(image, use_column_width=True)
+
+image_url = 'https://github.com/asselkassenova/data_analyst_portfolio/blob/main/Insurance_price/yurt.jpg'
+
+# Display the image from the URL
+st.image(image_url, use_column_width=True)
 
 st.header("please pick your characteristics")
 
