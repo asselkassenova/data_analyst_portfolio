@@ -57,7 +57,7 @@ smoker = st.radio('Smoker', ['Yes', 'No']) == 'Yes'
 region = st.selectbox('Region', ['Northwest', 'Southeast', 'Southwest'])
 
 # Specify the path to the model file
-model_path = st.text_input('Path to solubility_model.pkl', 'path/to/solubility_model.pkl')
+model_path = st.text_input('Path to solubility_model.pkl', 'https://github.com/asselkassenova/data_analyst_portfolio/blob/main/Insurance_price/solubility_model.pkl')
 
 if st.button('Predict'):
     prediction = load_and_predict(model_path, age, bmi, children, sex, smoker, region)
