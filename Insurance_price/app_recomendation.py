@@ -3,9 +3,7 @@
 # %%
 import pandas as pd              
 import numpy as np                        
-import matplotlib.pyplot as plt  
-import matplotlib.dates as mdates
-from tqdm.notebook import tqdm   
+  
 
 df = pd.read_csv('Medical_Insurance_dataset.csv')
 data = df
