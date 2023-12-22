@@ -1,4 +1,3 @@
-
 import streamlit as st
 
 #from streamlit_jupyter import StreamlitPatcher, tqdm
@@ -22,15 +21,27 @@ import streamlit as st
 
 def load_and_predict(model_path, age, bmi, children, sex, smoker, region):
     # Define the feature data
+    # Map 'Male' and 'Female' to 0 and 1
+    sex_mapping = {'Male': 0, 'Female': 1}
+    sex_numeric = sex_mapping.get(sex, -1)  # Default to -1 for unknown
+    
+    # Map 'Yes' and 'No' to 1 and 0
+    smoker_mapping = {'Yes': 1, 'No': 0}
+    smoker_numeric = smoker_mapping.get(smoker, -1)  # Default to -1 for unknown
+    
+    # Map 'Northwest,' 'Southeast,' and 'Southwest' to 1, 2, and 3
+    region_mapping = {'Northwest': 1, 'Southeast': 2, 'Southwest': 3}
+    region_numeric = region_mapping.get(region, -1)  # Default to -1 for unknown
+
     data = {
         "age": age,
         "bmi": bmi,
         "children": children,
-        "sex_male": sex,      # Male client
-        "smoker_yes": smoker, # Smoker
-        "region_northwest": region,
-        "region_southeast": region,
-        "region_southwest": region
+        "sex_male": sex_numeric,  # Male client (numeric)
+        "smoker_yes": smoker_numeric,  # Smoker (numeric)
+        "region_northwest": region_numeric,  # Region (numeric)
+        "region_southeast": region_numeric,  # Region (numeric)
+        "region_southwest": region_numeric  # Region (numeric)
     }
 
     # Create a DataFrame with the feature data
