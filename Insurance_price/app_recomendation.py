@@ -2,8 +2,7 @@
 # coding: utf-8
 # %%
 import pandas as pd              
-import numpy as np               
-import seaborn as sns            
+import numpy as np                        
 import matplotlib.pyplot as plt  
 import matplotlib.dates as mdates
 from tqdm.notebook import tqdm   
