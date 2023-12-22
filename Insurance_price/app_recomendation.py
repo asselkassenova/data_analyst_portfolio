@@ -1,9 +1,7 @@
 
-pip install streamlit_jupyter
-
 import streamlit as st
 
-from streamlit_jupyter import StreamlitPatcher, tqdm
+#from streamlit_jupyter import StreamlitPatcher, tqdm
 #StreamlitPatcher().jupyter() 
 import pandas as pd
 import pickle
