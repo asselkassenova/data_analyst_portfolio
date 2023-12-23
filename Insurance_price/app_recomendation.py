@@ -9,7 +9,7 @@ st.markdown("""
     <style>
     body {
         color: black;  /* Text color */
-        background-color: white;  /* Background color */
+        background-color: light;  /* Background color */
     }
     .st-bw {
         color: #4BC9FF !important;  /* Primary color */
