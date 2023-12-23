@@ -1,4 +1,7 @@
 import streamlit as st
+import pandas as pd 
+import pickle
+from PIL import Image
 
 # Set Streamlit theme to light mode
 st.set_page_config(page_title="DIGITAL NOMAD INSURANCE QUOTATION", page_icon="📈", layout="wide")
