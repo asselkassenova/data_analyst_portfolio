@@ -14,7 +14,7 @@ st.markdown("""
         color: #4BC9FF !important;  /* Primary color */
     }
     .st-cz {
-        max-width: 600px !important;  /* Max width of the app */
+        max-width: 300px !important;  /* Max width of the app */
         width: 100% !important;
         margin: 0 auto !important;
     }
