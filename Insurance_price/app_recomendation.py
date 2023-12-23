@@ -5,26 +5,6 @@ import pandas as pd
 import pickle
 from PIL import Image
 
-st.markdown("""
-    <style>
-    body {
-        color: black;  /* Text color */
-        background-color: light;  /* Background color */
-    }
-    .st-bw {
-        color: #4BC9FF !important;  /* Primary color */
-    }
-    .st-cz {
-        max-width: 200px !important;  /* Max width of the app */
-        width: 100% !important;
-        margin: 0 auto !important;
-        height: 200px !important; /* Height of the app */
-        overflow: hidden !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-
 st.header("DIGITAL NOMAD INSURANCE QUOTATION")
 
 image_url = 'Insurance_price/yurt.jpg'
