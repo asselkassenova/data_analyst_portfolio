@@ -1,44 +1,20 @@
 import streamlit as st
-import pandas as pd 
+#from streamlit_jupyter import StreamlitPatcher, tqdm
+#StreamlitPatcher().jupyter() 
+import pandas as pd
 import pickle
 from PIL import Image
-
-import streamlit as st
-
-# Set Streamlit theme to light mode
-st.set_page_config(page_title="DIGITAL NOMAD INSURANCE QUOTATION", page_icon="📈", layout="wide")
-
-# Add custom CSS for primary color and app size
-st.markdown("""
-    <style>
-    body {
-        color: black;  /* Text color */
-        background-color: white;  /* Background color */
-    }
-    .st-bw {
-        color: #4BC9FF !important;  /* Primary color */
-    }
-    .st-cz {
-        max-width: 400px !important;  /* Max width of the app */
-        width: 100% !important;
-        margin: 0 auto !important;
-        height: 400px !important; /* Height of the app */
-        overflow: hidden !important;
-    }
-    .st-eg {
-        max-width: 200px !important;  /* Max width of the image */
-        width: 100% !important;
-        height: auto !important; /* Height of the image */
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 st.header("DIGITAL NOMAD INSURANCE QUOTATION")
 
 image_url = 'Insurance_price/yurt.jpg'
 
-# Display the image from the URL with adjusted size
-st.image(image_url, use_column_width=True, output_format='PNG', use_container_width=False, cls="st-eg")
+# Display the image from the URL
+st.image(image_url, use_column_width=True)
+
+import pandas as pd
+import pickle
+import streamlit as st
 
 def load_and_predict(model_path, age, bmi, children, sex, smoker, region):
     # Define the feature data
