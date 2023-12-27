@@ -1,6 +1,6 @@
 ---
 title: "Personal Loan"
-author: "Assel_Kassenova, Liu\tXiuting, Pouroullis Bofilatos\tEleni, Yin\tHaoran, Zhou\tZiyu"
+author: "Assel_Kassenova"
 date: "5/8/2023"
 output: pdf_document
 ---
